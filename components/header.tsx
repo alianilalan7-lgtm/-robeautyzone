@@ -1,61 +1,53 @@
-import Link from "next/link";
+'use client'
+
+import Link from "next/link"
+import { useState } from "react"
 
 export default function Header() {
+    const [darkMode, setDarkMode] = useState(false)
+
+    const toggleDark = () => {
+        setDarkMode(!darkMode)
+        document.documentElement.classList.toggle('dark')
+    }
+
     return (
-        <header className="bg-white border-b border-primary-100 sticky top-0 z-50">
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
-                    {/* Logo */}
-                    <Link href="/" className="font-display text-2xl text-primary-700">
-                        IRO beautyzone
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <Link href="/" className="flex items-center space-x-2">
+                    <span className="text-2xl font-display font-bold tracking-tight text-primary">
+                        IRO <span className="text-xs uppercase font-sans tracking-widest text-gray-500">beautyzone</span>
+                    </span>
+                </Link>
+
+                <div className="hidden md:flex items-center space-x-10 text-sm font-medium tracking-wide">
+                    <Link href="/hizmetler" className="hover:text-primary transition-colors">
+                        Hizmetler
                     </Link>
-
-                    {/* Navigation */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link
-                            href="/hizmetler"
-                            className="text-primary-700 hover:text-primary-900 transition-colors font-medium"
-                        >
-                            Hizmetler
-                        </Link>
-                        <Link
-                            href="/galeri"
-                            className="text-primary-700 hover:text-primary-900 transition-colors font-medium"
-                        >
-                            Galeri
-                        </Link>
-                        <Link
-                            href="/hakkimizda"
-                            className="text-primary-700 hover:text-primary-900 transition-colors font-medium"
-                        >
-                            Hakkımızda
-                        </Link>
-                        <Link
-                            href="/randevu"
-                            className="bg-primary-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-600 transition-colors"
-                        >
-                            Randevu Al
-                        </Link>
-                    </div>
-
-                    {/* Mobile menu button */}
-                    <button className="md:hidden text-primary-700">
-                        <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                        </svg>
+                    <Link href="/galeri" className="hover:text-primary transition-colors">
+                        Galeri
+                    </Link>
+                    <Link href="/hakkimizda" className="hover:text-primary transition-colors">
+                        Hakkımızda
+                    </Link>
+                    <button
+                        onClick={toggleDark}
+                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    >
+                        <span className="text-sm">{darkMode ? '☀️' : '🌙'}</span>
                     </button>
+                    <Link
+                        href="/randevu"
+                        className="bg-primary text-white px-6 py-2.5 rounded-full hover:opacity-90 transition-all shadow-sm"
+                    >
+                        Randevu Al
+                    </Link>
                 </div>
-            </nav>
-        </header>
-    );
+
+                <button className="md:hidden p-2 text-2xl">
+                    ☰
+                </button>
+            </div>
+        </nav>
+    )
 }
