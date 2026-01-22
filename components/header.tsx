@@ -12,7 +12,7 @@ export default function Header() {
     }
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+        <nav className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-gray-100 dark:border-gray-800">
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 <Link href="/" className="flex items-center space-x-2">
                     <span className="text-2xl font-display font-bold tracking-tight text-primary">
@@ -34,7 +34,7 @@ export default function Header() {
                         onClick={toggleDark}
                         className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     >
-                        <span className="text-sm">{darkMode ? '☀️' : '🌙'}</span>
+                        <span className="material-symbols-outlined text-sm">dark_mode</span>
                     </button>
                     <Link
                         href="/randevu"
@@ -44,8 +44,8 @@ export default function Header() {
                     </Link>
                 </div>
 
-                <button className="md:hidden p-2 text-2xl">
-                    ☰
+                <button className="md:hidden p-2">
+                    <span className="material-symbols-outlined">menu</span>
                 </button>
             </div>
         </nav>

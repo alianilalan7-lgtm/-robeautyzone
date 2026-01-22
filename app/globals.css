@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+.glass-nav {
+    background: rgba(253, 252, 251, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-nav {
+    background: rgba(26, 22, 20, 0.8);
+}
+
+body {
+    background-color: #FDFCFB;
+}
+
+.dark body {
+    background-color: #1A1614;
+}
