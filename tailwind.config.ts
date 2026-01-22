@@ -11,23 +11,23 @@ const config: Config = {
         extend: {
             colors: {
                 // IRO beautyzone brand colors (from logo)
-                primary: {
-                    '50': '#faf8f5',
-                    '100': '#f2ede6',
-                    '200': '#e5dac9',
-                    '300': '#d4c2a4',
-                    '400': '#b8a99a',
-                    '500': '#9b8b7e', // Main taupe
-                    '600': '#8b7968',
-                    '700': '#6e6153',
-                    '800': '#5c534a',
-                    '900': '#4d4640',
+                "primary": {
+                    50: "#faf8f5",
+                    100: "#f2ede6",
+                    200: "#e5dac9",
+                    500: "#9b8b7e",
+                    700: "#6e6153",
+                    900: "#4d4640",
+                    DEFAULT: "#9b8b7e",
+                    dark: "#6e6153",
+                    light: "#a68d81",
                 },
-                cream: {
-                    '50': '#fefdfb',
-                    '100': '#faf8f5',
-                    '200': '#f5f2ed',
-                    '300': '#ebe6de',
+                "secondary": "#D1C7BD",
+                "background-light": "#F9F8F7",
+                "background-dark": "#1A1614",
+                "cream": {
+                    50: "#fefdfb",
+                    100: "#faf8f5",
                 },
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
