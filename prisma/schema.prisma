@@ -1,14 +1,264 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AppointmentStatus {
+  DRAFT
+  PENDING_CONFIRMATION
+  CONFIRMED
+  CANCELED
+  NO_RESPONSE
+  COMPLETED
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum LegalDocumentType {
+  KVKK
+  CONSENT
+  PRIVACY
+}
+
+model ServiceCategory {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  order    Int       @default(0)
+  services Service[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("service_categories")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  categoryId  String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  name        String
+  slug        String   @unique
+  description String   @db.Text
+  durationMin Int      // Duration in minutes
+  priceMin    Float
+  priceMax    Float?
+  images      String[] // Array of image URLs
+  
+  // Preparation tips
+  preparationTips String? @db.Text
+  
+  active      Boolean  @default(true)
+  order       Int      @default(0)
+  
+  appointments Appointment[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([categoryId])
+  @@map("services")
+}
+
+model Staff {
+  id       String  @id @default(cuid())
+  name     String
+  email    String? @unique
+  phone    String?
+  active   Boolean @default(true)
+  
+  // Service IDs this staff member can perform
+  serviceIds String[]
+  
+  appointments Appointment[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("staff")
+}
+
+model BusinessHours {
+  id         String    @id @default(cuid())
+  dayOfWeek  DayOfWeek @unique
+  isOpen     Boolean   @default(true)
+  openTime   String    // Format: "09:00"
+  closeTime  String    // Format: "18:00"
+  
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  
+  @@map("business_hours")
+}
+
+model Closure {
+  id        String   @id @default(cuid())
+  date      DateTime @db.Date
+  note      String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([date])
+  @@map("closures")
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  
+  // Service & Staff
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  staffId   String?
+  staff     Staff?   @relation(fields: [staffId], references: [id], onDelete: SetNull)
+  
+  // Customer info
+  customerName  String
+  customerPhone String  // Primary contact (WhatsApp)
+  customerEmail String?
+  
+  // Timing
+  startAt   DateTime
+  endAt     DateTime
+  
+  // Status tracking
+  status           AppointmentStatus @default(PENDING_CONFIRMATION)
+  
+  // Confirmation system
+  confirmationToken     String?  @unique
+  confirmationTokenHash String?  @unique
+  tokenExpiresAt        DateTime?
+  confirmationSentAt    DateTime?
+  confirmedAt           DateTime?
+  canceledAt            DateTime?
+  cancelReason          String?
+  
+  // KVKK consent
+  kvkkConsent   Boolean  @default(false)
+  consentAt     DateTime?
+  
+  // Admin notes
+  adminNotes    String?  @db.Text
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([serviceId])
+  @@index([staffId])
+  @@index([startAt])
+  @@index([status])
+  @@index([customerPhone])
+  @@map("appointments")
+}
+
+model GalleryItem {
+  id       String  @id @default(cuid())
+  imageUrl String
+  caption  String?
+  order    Int     @default(0)
+  active   Boolean @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("gallery_items")
+}
+
+model LegalDocument {
+  id      String             @id @default(cuid())
+  type    LegalDocumentType  @unique
+  title   String
+  content String             @db.Text
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("legal_documents")
+}
+
+model AuditLog {
+  id       String   @id @default(cuid())
+  actor    String   // User ID or "system"
+  action   String   // e.g., "CREATE", "UPDATE", "DELETE"
+  entity   String   // e.g., "Appointment", "Service"
+  entityId String
+  metadata Json?    // Additional context
+  
+  createdAt DateTime @default(now())
+  
+  @@index([entity, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // Hashed
+  role          String    @default("user") // "user" | "admin"
+  
+  accounts      Account[]
+  sessions      Session[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }
