@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Footer() {
     return (
-        <footer className="py-12 px-6 border-t border-gray-100 dark:border-gray-800">
+        <footer className="py-12 px-6 border-t border-gray-100">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center space-x-2">
                     <span className="text-2xl font-display font-bold tracking-tight text-primary">
@@ -10,9 +10,8 @@ export default function Footer() {
                     </span>
                 </div>
 
-                <div className="flex space-x-6 text-gray-500 dark:text-gray-400">
-                    <Link href="#" className="hover:text-primary transition-colors">Instagram</Link>
-                    <Link href="#" className="hover:text-primary transition-colors">WhatsApp</Link>
+                <div className="flex space-x-6 text-gray-500">
+                    <Link href="https://www.instagram.com/irobeautyzone/" target="_blank" className="hover:text-primary transition-colors">Instagram</Link>
                     <Link href="#" className="hover:text-primary transition-colors">TikTok</Link>
                 </div>
 
@@ -22,7 +21,7 @@ export default function Footer() {
             </div>
 
             {/* Mobile Bottom Nav */}
-            <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border border-gray-100 dark:border-gray-800 rounded-2xl shadow-2xl p-2 flex justify-around">
+            <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] bg-white/90 backdrop-blur-lg border border-gray-100 rounded-2xl shadow-2xl p-2 flex justify-around">
                 <Link href="/" className="p-3 text-primary flex flex-col items-center">
                     <span className="text-xl">🏠</span>
                     <span className="text-[10px] uppercase font-bold mt-1">Ana Sayfa</span>

@@ -1,8 +1,13 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/admin/appointments/page": "app/admin/appointments/page.js",
+  "/admin/calendar/page": "app/admin/calendar/page.js",
   "/admin/page": "app/admin/page.js",
+  "/api/slots/route": "app/api/slots/route.js",
   "/galeri/page": "app/galeri/page.js",
+  "/hakkimizda/page": "app/hakkimizda/page.js",
+  "/hizmetler/page": "app/hizmetler/page.js",
+  "/login/page": "app/login/page.js",
   "/page": "app/page.js",
   "/randevu/page": "app/randevu/page.js"
 }

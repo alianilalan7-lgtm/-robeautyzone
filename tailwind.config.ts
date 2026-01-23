@@ -10,25 +10,11 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                // IRO beautyzone brand colors (from logo)
-                "primary": {
-                    50: "#faf8f5",
-                    100: "#f2ede6",
-                    200: "#e5dac9",
-                    500: "#9b8b7e",
-                    700: "#6e6153",
-                    900: "#4d4640",
-                    DEFAULT: "#9b8b7e",
-                    dark: "#6e6153",
-                    light: "#a68d81",
-                },
-                "secondary": "#D1C7BD",
-                "background-light": "#F9F8F7",
-                "background-dark": "#1A1614",
-                "cream": {
-                    50: "#fefdfb",
-                    100: "#faf8f5",
-                },
+                primary: "#8D776C",
+                "background-light": "#F7F5F4",
+                "background-dark": "#121212",
+                "accent-light": "#F3F0EF",
+                "accent-dark": "#1E1E1E",
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
                 card: {
@@ -63,10 +49,12 @@ const config: Config = {
                 },
             },
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
-                display: ['Playfair Display', 'serif'],
+                display: ['Cormorant Garamond', 'serif'],
+                sans: ['Inter', 'sans-serif'],
             },
             borderRadius: {
+                DEFAULT: "12px",
+                large: "32px",
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
