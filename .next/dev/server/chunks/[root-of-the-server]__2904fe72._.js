@@ -201,6 +201,7 @@ async function createAppointment(input) {
     const endAt = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$addMinutes$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addMinutes"])(new Date(`${input.date}T${input.time}`), service.durationMin).toISOString();
     // 4. Insert Appointment
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from('appointments').insert({
+        id: crypto.randomUUID(),
         serviceId: service.id,
         customerName: input.customerName,
         customerPhone: input.customerPhone,
@@ -210,7 +211,8 @@ async function createAppointment(input) {
         status: 'PENDING_CONFIRMATION',
         kvkkConsent: input.kvkkConsent,
         consentAt: new Date().toISOString(),
-        confirmationToken: crypto.randomUUID()
+        confirmationToken: crypto.randomUUID(),
+        updatedAt: new Date().toISOString()
     }).select().single();
     if (error) {
         console.error('Create error:', error);

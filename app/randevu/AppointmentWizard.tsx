@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
@@ -23,6 +24,7 @@ interface AppointmentWizardProps {
 }
 
 export default function AppointmentWizard({ services }: AppointmentWizardProps) {
+    const searchParams = useSearchParams()
     const [step, setStep] = useState(1)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -45,6 +47,22 @@ export default function AppointmentWizard({ services }: AppointmentWizardProps) 
 
     const handleNext = () => setStep(step + 1)
     const handleBack = () => setStep(step - 1)
+
+    // CHECK URL FOR SERVICE PARAMETER
+    useEffect(() => {
+        const serviceId = searchParams.get('service')
+        if (serviceId && step === 1 && services.length > 0) {
+            const service = services.find(s => s.id === serviceId)
+            if (service) {
+                setFormData(prev => ({
+                    ...prev,
+                    serviceSlug: service.slug,
+                    serviceDuration: service.durationMin
+                }))
+                setStep(2)
+            }
+        }
+    }, [searchParams, services, step])
 
     // Fetch slots when date or service changes
     useEffect(() => {

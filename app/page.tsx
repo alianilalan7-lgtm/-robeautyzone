@@ -29,24 +29,23 @@ export default function HomePage() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                                <button className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                                <a href="/hizmetler" className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
                                     <span className="material-symbols-outlined">calendar_today</span>
-                                    Hemen Randevu Al
-                                </button>
-                                <button className="border border-gray-200 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
-                                    Hizmetlerimiz
-                                </button>
+                                    Hizmetleri Gör & Randevu Al
+                                </a>
                             </div>
                         </div>
 
                         <div className="relative">
-                            <div className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl relative z-10">
-                                <img
-                                    alt="Professional Nail Art"
-                                    className="w-full h-full object-cover"
-                                    src="/images/gallery/hero-main.jpg"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+                            <div className="relative z-10 p-6 bg-white/50 backdrop-blur-xl border-4 border-primary/50 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
+                                <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-sm relative">
+                                    <img
+                                        alt="Professional Nail Art"
+                                        className="w-full h-full object-cover"
+                                        src="/images/gallery/hero-main.jpg"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+                                </div>
                             </div>
 
                             <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-primary/30 rounded-full blur-3xl -z-10"></div>

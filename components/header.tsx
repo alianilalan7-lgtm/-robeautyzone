@@ -33,7 +33,7 @@ export default function Header() {
                     </Link>
                     <ThemeToggle />
                     <Link
-                        href="/randevu"
+                        href="/hizmetler"
                         className="bg-primary text-white px-6 py-2.5 rounded-full hover:opacity-90 transition-all shadow-sm"
                     >
                         Randevu Al
