@@ -37,12 +37,12 @@ export default function HomePage() {
                         </div>
 
                         <div className="relative">
-                            <div className="relative z-10 p-6 bg-white/50 backdrop-blur-xl border-4 border-primary/50 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
-                                <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-sm relative">
+                            <div className="relative z-10">
+                                <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative">
                                     <img
                                         alt="Professional Nail Art"
-                                        className="w-full h-full object-cover"
-                                        src="/images/gallery/hero-main.jpg"
+                                        className="w-full h-full object-cover object-top"
+                                        src="/hero-new.png"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
                                 </div>
