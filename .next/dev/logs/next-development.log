@@ -1050,3 +1050,15 @@ It can also happen if the client has a browser extension installed which messes 
 [03:18:37.645] Browser WARN    Image with src "/images/gallery/gallery-8.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
 [03:18:37.645] Browser WARN    Image with src "/images/gallery/gallery-7.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
 [03:20:21.199] Server  LOG     ✓ Compiled in 76ms
+[03:20:53.770] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-8.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-1.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-2.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-3.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-4.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-5.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-6.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-7.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:20:53.887] Browser WARN    Image with src "/images/gallery/gallery-8.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[03:21:38.680] Server  LOG     ✓ Compiled in 27ms

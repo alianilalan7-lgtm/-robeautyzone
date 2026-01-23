@@ -48,7 +48,7 @@ const galleryItems = [
 
 export default function GaleriPage() {
     return (
-        <div className="min-h-screen bg-white dark:bg-accent-dark py-16 px-4">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark py-16 px-4">
             <div className="max-w-7xl mx-auto">
                 <h1 className="font-display text-4xl md:text-5xl text-gray-900 dark:text-gray-100 text-center mb-8">
                     Galeri
