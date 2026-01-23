@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const { id } = params
     const { data, error } = await supabase
         .from('appointments')
@@ -19,7 +20,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
     return NextResponse.json(data)
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const { id } = params
     const body = await request.json()
 
@@ -46,7 +48,8 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     return NextResponse.json(data)
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const { id } = params
     const { error } = await supabase
         .from('appointments')

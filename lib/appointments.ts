@@ -20,7 +20,7 @@ export async function checkAvailability(date: string, time: string, durationMin:
     const endAt = addMinutes(startAt, durationMin)
 
     // 1. Check Business Hours
-    const dayOfWeek = format(startAt, 'EEEE').toUpperCase()
+    const dayOfWeek = format(startAt, 'EEEE').toUpperCase() as "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY"
     const { data: businessHours, error: bhError } = await supabase
         .from('business_hours')
         .select('*')
@@ -96,6 +96,7 @@ export async function createAppointment(input: CreateAppointmentInput) {
     const { data, error } = await supabase
         .from('appointments')
         .insert({
+            id: crypto.randomUUID(),
             serviceId: service.id,
             customerName: input.customerName,
             customerPhone: input.customerPhone,
@@ -105,7 +106,8 @@ export async function createAppointment(input: CreateAppointmentInput) {
             status: 'PENDING_CONFIRMATION',
             kvkkConsent: input.kvkkConsent,
             consentAt: new Date().toISOString(),
-            confirmationToken: crypto.randomUUID()
+            confirmationToken: crypto.randomUUID(),
+            updatedAt: new Date().toISOString()
         })
         .select()
         .single()

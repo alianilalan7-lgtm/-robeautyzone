@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/appointments/page": "app/admin/appointments/page.js",
+  "/admin/calendar/page": "app/admin/calendar/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/services/page": "app/admin/services/page.js",
+  "/admin/settings/page": "app/admin/settings/page.js",
+  "/api/appointments/[id]/route": "app/api/appointments/[id]/route.js",
+  "/api/appointments/confirm/route": "app/api/appointments/confirm/route.js",
+  "/api/appointments/route": "app/api/appointments/route.js",
+  "/api/gallery/route": "app/api/gallery/route.js",
+  "/api/services/[slug]/route": "app/api/services/[slug]/route.js",
+  "/api/services/route": "app/api/services/route.js",
+  "/api/slots/route": "app/api/slots/route.js",
+  "/galeri/page": "app/galeri/page.js",
+  "/hakkimizda/page": "app/hakkimizda/page.js",
+  "/hizmetler/page": "app/hizmetler/page.js",
+  "/kvkk/page": "app/kvkk/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/randevu/page": "app/randevu/page.js"
+}
