@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server'
 import { checkAvailability } from '@/lib/appointments'
-import { addMinutes, format, isBefore, parse, set } from 'date-fns'
+import { supabaseAdmin as supabase } from '@/lib/supabase-server'
+import { addMinutes, format, isBefore, parse } from 'date-fns'
+
+const DAY_MAP: Record<number, string> = {
+    0: 'SUNDAY', 1: 'MONDAY', 2: 'TUESDAY', 3: 'WEDNESDAY',
+    4: 'THURSDAY', 5: 'FRIDAY', 6: 'SATURDAY'
+}
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const date = searchParams.get('date')
-    const serviceSlug = searchParams.get('service')
     const duration = searchParams.get('duration')
 
     if (!date || !duration) {
@@ -13,36 +18,30 @@ export async function GET(request: Request) {
     }
 
     const durationMin = parseInt(duration)
-    const slots = []
+    const dayOfWeek = DAY_MAP[new Date(`${date}T00:00:00`).getDay()]
 
-    // Start from 09:00 to 20:00 (simple loop, real logic uses business hours in checkAvailability)
-    // We generated logic in lib/appointments to check business hours, so we can just loop widely
-    // and let the checker filter them.
+    const { data: businessHours } = await supabase
+        .from('business_hours')
+        .select('isOpen, openTime, closeTime')
+        .eq('dayOfWeek', dayOfWeek as 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY')
+        .single()
 
-    // But to be efficient, we should roughly know open hours.
-    // Let's assume 09:00 - 19:30 (last slot)
+    if (!businessHours?.isOpen) {
+        return NextResponse.json({ slots: [] })
+    }
 
-    let current = parse(`${date}T09:00`, "yyyy-MM-dd'T'HH:mm", new Date())
-    const end = parse(`${date}T20:00`, "yyyy-MM-dd'T'HH:mm", new Date())
+    const slots: string[] = []
+    let current = parse(`${date}T${businessHours.openTime}`, "yyyy-MM-dd'T'HH:mm", new Date())
+    const closeDateTime = parse(`${date}T${businessHours.closeTime}`, "yyyy-MM-dd'T'HH:mm", new Date())
+    const lastStart = addMinutes(closeDateTime, -durationMin)
+    const now = new Date()
 
-    while (isBefore(current, end)) {
-        const timeStr = format(current, 'HH:mm')
-
-        // Skip past times if today
-        const now = new Date()
-        const slotDateTime = parse(`${date}T${timeStr}`, "yyyy-MM-dd'T'HH:mm", new Date())
-
-        if (isBefore(slotDateTime, now)) {
-            current = addMinutes(current, 30) // 30 min intervals
-            continue
+    while (!isBefore(lastStart, current)) {
+        if (!isBefore(current, now)) {
+            const timeStr = format(current, 'HH:mm')
+            const check = await checkAvailability(date, timeStr, durationMin)
+            if (check.available) slots.push(timeStr)
         }
-
-        const check = await checkAvailability(date, timeStr, durationMin)
-
-        if (check.available) {
-            slots.push(timeStr)
-        }
-
         current = addMinutes(current, 30)
     }
 

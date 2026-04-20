@@ -10,38 +10,26 @@ async function getSession() {
 }
 
 export async function GET() {
-    const { data: items, error } = await supabase
-        .from('gallery_items')
+    const { data: closures, error } = await supabase
+        .from('closures')
         .select('*')
-        .eq('active', true)
-        .order('order', { ascending: true })
+        .order('date', { ascending: true })
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-    return NextResponse.json({ items })
+    return NextResponse.json({ closures })
 }
 
 export async function POST(request: Request) {
     const session = await getSession()
     if (!session) return NextResponse.json({ error: 'Yetkisiz' }, { status: 401 })
 
-    const body = await request.json()
-    const { imageUrl, caption } = body
-
-    if (!imageUrl) return NextResponse.json({ error: 'imageUrl gerekli' }, { status: 400 })
-
-    const { data: last } = await supabase
-        .from('gallery_items')
-        .select('order')
-        .order('order', { ascending: false })
-        .limit(1)
-        .single()
-
-    const nextOrder = (last?.order ?? -1) + 1
+    const { date, note } = await request.json()
+    if (!date) return NextResponse.json({ error: 'Tarih gerekli' }, { status: 400 })
 
     const { data, error } = await supabase
-        .from('gallery_items')
-        .insert({ id: crypto.randomUUID(), imageUrl, caption: caption || null, order: nextOrder, active: true, updatedAt: new Date().toISOString() })
+        .from('closures')
+        .insert({ id: crypto.randomUUID(), date, note: note || null, updatedAt: new Date().toISOString() })
         .select()
         .single()
 

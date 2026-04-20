@@ -16,38 +16,51 @@ function Calendar({
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
-            className={cn("p-3", className)}
+            className={cn("p-3 select-none", className)}
             classNames={{
-                months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-                month: "space-y-4",
-                caption: "flex justify-center pt-1 relative items-center",
-                caption_label: "text-base font-semibold",
-                nav: "space-x-1 flex items-center",
-                nav_button: cn(
-                    "h-9 w-9 bg-transparent p-0 opacity-50 hover:opacity-100"
-                ),
-                nav_button_previous: "absolute left-1",
-                nav_button_next: "absolute right-1",
-                table: "w-full border-collapse space-y-1",
-                head_row: "flex",
-                head_cell:
-                    "text-muted-foreground rounded-md w-12 font-medium text-sm",
-                row: "flex w-full mt-2",
-                cell: "h-12 w-12 text-center text-base p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                day: cn(
-                    "h-12 w-12 p-0 font-normal aria-selected:opacity-100 transition-all duration-200 hover:scale-110 rounded-xl"
-                ),
-                day_range_end: "day-range-end",
-                day_selected:
-                    "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-xl",
-                day_today: "bg-accent text-accent-foreground rounded-xl",
-                day_outside:
-                    "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
-                day_disabled: "text-muted-foreground opacity-50 line-through",
-                day_range_middle:
-                    "aria-selected:bg-accent aria-selected:text-accent-foreground",
-                day_hidden: "invisible",
+                /* Layout */
+                months: "relative flex flex-col gap-4",
+                month: "flex flex-col gap-3",
+
+                /* Caption row */
+                month_caption: "flex justify-center h-9 items-center px-10",
+                caption_label: "text-sm font-semibold text-gray-800",
+
+                /* Nav (absolutely positioned over caption) */
+                nav: "absolute top-0 left-0 right-0 flex items-center justify-between",
+                button_previous: "h-9 w-9 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors cursor-pointer",
+                button_next: "h-9 w-9 flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors cursor-pointer",
+
+                /* Grid */
+                month_grid: "w-full border-collapse",
+                weekdays: "flex mb-1",
+                weekday: "w-9 text-center text-xs font-medium text-gray-400 py-1",
+                weeks: "flex flex-col gap-1",
+                week: "flex",
+
+                /* Cells */
+                day: "w-9 h-9 p-0 text-center",
+                day_button: "w-9 h-9 flex items-center justify-center rounded-lg text-sm text-gray-900 font-normal hover:bg-gray-100 transition-colors duration-150 cursor-pointer",
+
+                /* Modifiers */
+                today: "!bg-gray-100 !text-gray-900 font-semibold",
+                selected: "!bg-[#8D776C] !text-white hover:!bg-[#7a6760]",
+                outside: "!text-gray-300",
+                disabled: "!text-gray-200 cursor-not-allowed pointer-events-none",
+                hidden: "invisible",
+
+                /* Range */
+                range_start: "rounded-l-lg",
+                range_end: "rounded-r-lg",
+                range_middle: "bg-[#8D776C]/10 rounded-none",
+
                 ...classNames,
+            }}
+            components={{
+                Chevron: ({ orientation }) =>
+                    orientation === "left"
+                        ? <ChevronLeft className="w-4 h-4" />
+                        : <ChevronRight className="w-4 h-4" />,
             }}
             {...props}
         />
